@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { WorkspaceComponent } from './workspace/workspace.component'; // Adjust path as necessary
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    template: '<app-workspace></app-workspace>', // Use the workspace component directly
+    standalone: true,
+    imports: [WorkspaceComponent] // Import the workspace component
 })
-export class AppComponent {
-  title = 'dragdroptest';
-}
+export class AppComponent {}

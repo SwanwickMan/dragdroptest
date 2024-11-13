@@ -1,0 +1,8 @@
+.workspace {
+    width: 100%; /* Full width */
+    height: 400px; /* Set a fixed height */
+    border: 2px dashed #ccc; /* Visible border for the workspace */
+    position: relative; /* To position children if needed */
+    overflow: auto; /* Enable scrolling if content overflows */
+    background-color: #f9f9f9; /* Light background for visibility */
+}

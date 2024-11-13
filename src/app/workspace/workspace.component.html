@@ -1,0 +1,11 @@
+<div class="workspace">
+  <div *ngFor="let block of blocks">
+    <app-block
+      [id]="block.id"
+      [label]="block.label"
+      [color]="block.color"
+      [x]="block.x"
+      [y]="block.y">
+    </app-block>
+  </div>
+</div>
