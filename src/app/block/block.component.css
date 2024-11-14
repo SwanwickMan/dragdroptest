@@ -1,10 +1,6 @@
 .block-container {
-    width: 100px; /* Adjust width as needed */
-    height: 50px; /* Set a height */
     border: 1px solid #333; /* Border to make it visible */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
     margin: 10px; /* Space between blocks */
     cursor: move; /* Indicate that it's draggable */
     transition: background-color 0.2s; /* Smooth color transition */
