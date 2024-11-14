@@ -77,11 +77,13 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
   }
 
   insertUnderneath(block: BlockComponent) {
-    const nextBlock= block.nextBlock;
+    let nextBlock= block.nextBlock;
 
     block.connect(this);
     if (nextBlock) {
-      this.connect(nextBlock);
+      let bottomBlock = this.nextBlock || this
+      while(bottomBlock.nextBlock != null) bottomBlock = bottomBlock.nextBlock;
+      bottomBlock.connect(nextBlock);
     }
 
     block.updateChildXYPositions();
