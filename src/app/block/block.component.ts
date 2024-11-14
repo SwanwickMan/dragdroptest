@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export abstract class BlockComponent implements OnInit, OnDestroy {
-  color: string = "white";
+  abstract color: string;
   abstract width: number;
   abstract height: number;
 
@@ -41,8 +41,7 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
     this.blockCollisionService.removeBlock(this);
   }
 
-  initialize(color: string, x: number, y: number) {
-    this.color = color;
+  initialize(x: number, y: number) {
     this.x = x;
     this.y = y;
   }
