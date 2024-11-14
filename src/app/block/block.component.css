@@ -4,6 +4,11 @@
     margin: 10px; /* Space between blocks */
     cursor: move; /* Indicate that it's draggable */
     transition: background-color 0.2s; /* Smooth color transition */
+    user-select: none;
+}
+
+p{
+  margin: auto;
 }
 
 .block-container:active {

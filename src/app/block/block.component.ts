@@ -1,6 +1,7 @@
 import {Component, Input, HostListener, OnInit, OnDestroy, ElementRef} from '@angular/core';
 import {NgStyle} from '@angular/common';
 import {BlockCollisionService} from '../block-collision-service/block-collision-service.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-block',
@@ -8,16 +9,17 @@ import {BlockCollisionService} from '../block-collision-service/block-collision-
   styleUrls: ['./block.component.css'],
   standalone: true,
   imports: [
-    NgStyle
+    NgStyle,
+    FormsModule
   ],
 })
-export class BlockComponent implements OnInit, OnDestroy {
-  label: string = '';
-  color: string = 'skyblue';
+export abstract class BlockComponent implements OnInit, OnDestroy {
+  color: string = "white";
+  abstract width: number;
+  abstract height: number;
+
   x: number = 0; // Current X position
   y: number = 0; // Current Y position
-  width: number = 100;
-  height: number = 60;
 
   private isDragging = false;
   private startX = 0;
@@ -39,14 +41,13 @@ export class BlockComponent implements OnInit, OnDestroy {
     this.blockCollisionService.removeBlock(this);
   }
 
-  initialize(label: string, color: string, x: number, y: number) {
-    this.label = label;
+  initialize(color: string, x: number, y: number) {
     this.color = color;
     this.x = x;
     this.y = y;
   }
 
-  move(x: number, y: number) {
+  private move(x: number, y: number) {
     this.x = x;
     this.y = y;
     // If there are connected blocks, move them as well
@@ -61,7 +62,6 @@ export class BlockComponent implements OnInit, OnDestroy {
     this.isDragging = true;
     this.startX = event.clientX - this.x;
     this.startY = event.clientY - this.y;
-    event.preventDefault(); // Prevents text selection
   }
 
   // Mouse move event to handle dragging
@@ -78,7 +78,7 @@ export class BlockComponent implements OnInit, OnDestroy {
   onMouseUp() {
     if(this.isDragging){
       let touching_block:BlockComponent | null = this.checkCollisions();
-      if (touching_block) {touching_block.connectUnderneath(this);}
+      if (touching_block) { this.insertUnderneath(touching_block); }
     }
     this.isDragging = false;
   }
@@ -91,7 +91,7 @@ export class BlockComponent implements OnInit, OnDestroy {
          this.y < otherBlock.y + otherBlock.height;
 }
 
-  checkCollisions(): BlockComponent | null {
+  private checkCollisions(): BlockComponent | null {
     const collisions = this.blockCollisionService.getCollisionsForBlock(this);
     if (collisions.length > 0) {
       // currently selects random block of all it collides with fix later
@@ -100,14 +100,23 @@ export class BlockComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  connectUnderneath(block: BlockComponent) {
+  private connect(block: BlockComponent) {
     block.previousBlock = this;
     this.nextBlock = block;
-
-    this.updateChildXYPositions()
   }
 
-  updateChildXYPositions(){
+  insertUnderneath(block: BlockComponent) {
+    const nextBlock= block.nextBlock;
+
+    block.connect(this);
+    if (nextBlock) {
+      this.connect(nextBlock);
+    }
+
+    block.updateChildXYPositions();
+  }
+
+  private updateChildXYPositions(){
     let block = this.nextBlock;
     if (block) {
       block.startX = this.startX;

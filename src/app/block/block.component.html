@@ -1,15 +1,11 @@
 <div
       class="block-container"
       [ngStyle]="{
-        width: width + 'px',
-        height: height + 'px',
+        width: 'fit-content',
+        height: 'fit-content',
         transform: 'translate(' + x + 'px, ' + y + 'px)',
         background: color,
       }"
     >
-      <p style="margin: auto">
-      Prev: {{ previousBlock?.label }} <br>
-      Block: {{ label }} <br>
-      Next: {{ nextBlock?.label }} <br>
-      </p>
-    </div>
+  <ng-content></ng-content>
+</div>
