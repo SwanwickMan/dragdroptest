@@ -1,3 +1,10 @@
-<div class="block-container">
-  <app-block *ngFor="let id of [1, 2, 3]" [id]="id"></app-block>
-</div>
+<div
+      class="block-container"
+      [ngStyle]="{
+        transform: 'translate(' + x + 'px, ' + y + 'px)',
+        background: color,
+      }"
+    >
+      Block: {{ label }}
+      Next: {{ nextBlock?.label }}
+    </div>

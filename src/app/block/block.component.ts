@@ -3,36 +3,30 @@ import {NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-block',
-  template: `
-    <div
-      class="block"
-      [ngStyle]="{
-        transform: 'translate(' + x + 'px, ' + y + 'px)'
-      }"
-    >
-      Block {{ id }}
-    </div>
-  `,
+  templateUrl: './block.component.html',
+  styleUrls: ['./block.component.css'],
   standalone: true,
   imports: [
     NgStyle
   ],
-  styleUrls: ['./block.component.css']
 })
 export class BlockComponent {
-  @Input() id: number = 0;
-  @Input() label: string = '';
-  @Input() color: string = 'skyblue';
-  @Input() x: number = 0; // Current X position
-  @Input() y: number = 0; // Current Y position
+  label: string = '';
+  color: string = 'skyblue';
+  x: number = 0; // Current X position
+  y: number = 0; // Current Y position
 
   private isDragging = false;
   private startX = 0;
   private startY = 0;
+
   public nextBlock: BlockComponent | null = null;
 
-  constructor() {
-
+  initialize(label: string, color: string, x: number, y: number) {
+    this.label = label;
+    this.color = color;
+    this.x = x;
+    this.y = y;
   }
 
   move(x: number, y: number) {
@@ -40,7 +34,7 @@ export class BlockComponent {
     this.y = y;
     // If there are connected blocks, move them as well
     if (this.nextBlock) {
-      this.nextBlock.move(x, y + 1); // Adjust y position for each block below
+      this.nextBlock.move(x, y - 1); // Adjust y position for each block below
     }
   }
 
@@ -70,4 +64,5 @@ export class BlockComponent {
   connectBlock(block: BlockComponent) {
     this.nextBlock = block;
   }
+
 }
