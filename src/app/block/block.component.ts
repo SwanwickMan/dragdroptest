@@ -20,6 +20,7 @@ export class BlockComponent {
   private startX = 0;
   private startY = 0;
 
+  public previousBlock: BlockComponent | null = null;
   public nextBlock: BlockComponent | null = null;
 
   initialize(label: string, color: string, x: number, y: number) {
@@ -51,6 +52,7 @@ export class BlockComponent {
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     if (this.isDragging) {
+      this.disconnectBlockAbove()
       this.move(event.clientX - this.startX, event.clientY - this.startY)
     }
   }
@@ -61,8 +63,16 @@ export class BlockComponent {
     this.isDragging = false;
   }
 
-  connectBlock(block: BlockComponent) {
+  connectBlockUnderneath(block: BlockComponent) {
+    block.previousBlock = this;
     this.nextBlock = block;
+  }
+
+  disconnectBlockAbove(){
+    if (this.previousBlock != null){
+      this.previousBlock.nextBlock = null;
+      this.previousBlock = null;
+    }
   }
 
 }

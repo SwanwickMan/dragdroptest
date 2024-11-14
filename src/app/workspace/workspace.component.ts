@@ -42,7 +42,7 @@ export class WorkspaceComponent {
     console.log("argh2")
     this.blocksOnCanvas.forEach((blockRef, index) => {
       if (lastBlock != undefined){
-        lastBlock.instance.connectBlock(blockRef.instance);
+        lastBlock.instance.connectBlockUnderneath(blockRef.instance);
         console.log("argh")
       }
       lastBlock = blockRef;
