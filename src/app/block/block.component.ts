@@ -55,34 +55,6 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Mouse down event to initiate dragging
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(event: MouseEvent) {
-    this.isDragging = true;
-    this.startX = event.clientX - this.x;
-    this.startY = event.clientY - this.y;
-  }
-
-  // Mouse move event to handle dragging
-  @HostListener('document:mousemove', ['$event'])
-  onMouseMove(event: MouseEvent) {
-    if (this.isDragging) {
-      this.disconnectBlockAbove()
-      this.move(event.clientX - this.startX, event.clientY - this.startY)
-    }
-  }
-
-  // Mouse up event to stop dragging
-  @HostListener('document:mouseup')
-  onMouseUp() {
-    if(this.isDragging){
-      let touching_block:BlockComponent | null = this.checkCollisions();
-      if (touching_block) { this.insertUnderneath(touching_block); }
-    }
-    this.isDragging = false;
-  }
-
-
   isOverlapping(otherBlock: BlockComponent): boolean {
   return this.x + this.width > otherBlock.x &&
          this.x < otherBlock.x + otherBlock.width &&
@@ -133,6 +105,61 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
       this.previousBlock.nextBlock = null;
       this.previousBlock = null;
     }
+  }
+
+
+  // below all handles moving blocks with mouse and touchscreen
+  @HostListener('mousedown', ['$event'])
+  onMouseDown(event: MouseEvent) {
+    this.isDragging = true;
+    this.startX = event.clientX - this.x;
+    this.startY = event.clientY - this.y;
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    if (this.isDragging) {
+      this.disconnectBlockAbove()
+      this.move(event.clientX - this.startX, event.clientY - this.startY)
+    }
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp() {
+    if(this.isDragging){
+      let touching_block:BlockComponent | null = this.checkCollisions();
+      if (touching_block) { this.insertUnderneath(touching_block); }
+    }
+    this.isDragging = false;
+  }
+
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    // Prevent default to avoid unwanted scrolling or zooming during drag
+    event.preventDefault();
+    this.isDragging = true;
+    this.startX = event.touches[0].clientX - this.x;
+    this.startY = event.touches[0].clientY - this.y;
+  }
+
+  @HostListener('document:touchmove', ['$event'])
+  onTouchMove(event: TouchEvent) {
+    if (this.isDragging) {
+      event.preventDefault(); // Prevents the page from scrolling during the drag
+      this.disconnectBlockAbove();
+      this.move(event.touches[0].clientX - this.startX, event.touches[0].clientY - this.startY);
+    }
+  }
+
+  @HostListener('document:touchend')
+  onTouchEnd() {
+    if (this.isDragging) {
+      let touching_block: BlockComponent | null = this.checkCollisions();
+      if (touching_block) {
+        this.insertUnderneath(touching_block);
+      }
+    }
+    this.isDragging = false;
   }
 
 }
