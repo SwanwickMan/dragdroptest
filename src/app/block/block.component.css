@@ -5,10 +5,23 @@
     cursor: move; /* Indicate that it's draggable */
     transition: background-color 0.2s; /* Smooth color transition */
     user-select: none;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+  font-size: 20px;
 }
 
 p{
+  font-size: 10px;
   margin: auto;
+}
+
+#dataset{
+  width: 80%;
 }
 
 .block-container:active {

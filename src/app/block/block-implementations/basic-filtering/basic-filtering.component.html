@@ -8,9 +8,8 @@
       }"
     >
 
-  <p>
-    Prev: {{previousBlock}} <br>
-    Basic Filtering<br>
-    Next: {{nextBlock}} <br>
-  </p>
+  <h1>Basic Filtering</h1>
+  <div> <p>Minimum Genes Per Cell</p> <input [(ngModel)]="genesPerCell" type="number" min="0" [defaultValue]=minimumGenesPerCell /> </div>
+  <div> <p>Minimum Cells Per Gene</p> <input [(ngModel)]="cellsPerGene" type="number" min="0" [defaultValue]=minimumCellsPerGene /> </div>
+
 </div>

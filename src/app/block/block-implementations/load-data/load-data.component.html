@@ -8,9 +8,10 @@
       }"
     >
 
-  <p>
-    Prev: {{previousBlock}} <br>
-    Load Data<br>
-    Next: {{nextBlock}} <br>
-  </p>
+  <h1> Load Data </h1>
+  <select id="dataset" [(ngModel)]="selectedDataSet">
+    <option value="1">Peripheral Blood Mononuclear cells</option>
+    <option value="2" selected>Malaria Cells Atlus P. falciparum</option>
+  </select>
+  {{selectedDataSet}}
 </div>
