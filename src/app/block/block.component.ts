@@ -60,13 +60,27 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
          this.x < otherBlock.x + otherBlock.width &&
          this.y + this.height > otherBlock.y &&
          this.y < otherBlock.y + otherBlock.height;
-}
+  }
+
+  private measureDistance(otherBlock: BlockComponent): number {
+    const dx = otherBlock.x - this.x;
+    const dy = otherBlock.y - this.y;
+    return Math.sqrt(dx**2 + dy**2);
+  }
 
   private checkCollisions(): BlockComponent | null {
     const collisions = this.blockCollisionService.getCollisionsForBlock(this);
     if (collisions.length > 0) {
-      // currently selects random block of all it collides with fix later
-      return collisions[0];
+      let minDistance = Infinity;
+      let closestBlock: BlockComponent | null = null;
+      for (const block of collisions) {
+        const distance = this.measureDistance(block);
+        if (distance < minDistance) {
+          minDistance = distance
+          closestBlock = block;
+        }
+      }
+      return closestBlock;
     }
     return null;
   }
