@@ -1,12 +1,14 @@
 <div #dynamicContainer class="workspace horizontal-container" style="height: calc(88vh - 20px)">
         <div style="width: 24%">
             <app-block-library>
-              <button (click)="addBlock(LoadData, 0, 0)">Add LoadData Block</button>
-              <button (click)="addBlock(BasicFilteringComponent, 0, 0)">Add LoadData Block</button>
-              <button (click)="addBlock(QualityControlPlots, 0, 0)">Add LoadData Block</button>
               <button (click)="removeAllBlocks()">clear all Blocks</button>
 
               <app-block-generator [workspace]="this" [blockType]="LoadData"></app-block-generator>
+              <app-block-generator [workspace]="this" [blockType]="BasicFilteringComponent"></app-block-generator>
+              <app-block-generator [workspace]="this" [blockType]="QualityControlPlots"></app-block-generator>
+              <app-block-generator [workspace]="this" [blockType]="QualityControlsFiltering"></app-block-generator>
+              <app-block-generator [workspace]="this" [blockType]="IdentifyHighlyVariableGenes"></app-block-generator>
+              <app-block-generator [workspace]="this" [blockType]="PlotDimensionReduction"></app-block-generator>
             </app-block-library>
         </div>
         <div style="width: 24%">

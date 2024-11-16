@@ -140,7 +140,7 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
 
 
 
-  // below all handles moving blocks with mouse and touchscreen
+  // below all handles moving blocks with mouse and touchscreen needs overhaul
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
@@ -173,6 +173,7 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
     this.isDragging = false;
   }
 
+  // touch screen stuff
   @HostListener('touchstart', ['$event'])
   onTouchStart(event: TouchEvent) {
     // Prevent default to avoid unwanted scrolling or zooming during drag

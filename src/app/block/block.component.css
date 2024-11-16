@@ -1,6 +1,5 @@
 .block-container {
     border: 1px solid #333; /* Border to make it visible */
-    position: fixed;
     margin: 10px; /* Space between blocks */
     cursor: move; /* Indicate that it's draggable */
     transition: background-color 0.2s; /* Smooth color transition */
@@ -9,7 +8,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /* important for weird reasons*/
+    left: 0;
+    top: 0;
     z-index: 1000;
+    position: absolute;
 }
 
 h1{
