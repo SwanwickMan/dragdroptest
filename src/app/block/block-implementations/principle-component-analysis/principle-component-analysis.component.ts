@@ -3,7 +3,7 @@ import { BlockComponent } from '../../block.component';
 import {NgStyle} from '@angular/common';
 
 @Component({
-  selector: 'app-basic-filtering',
+  selector: 'app-principle-component-analysis',
   standalone: true,
   imports: [
     NgStyle

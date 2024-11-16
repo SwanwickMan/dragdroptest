@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { BlockComponent } from '../block/block.component'; // adjust the path to your Block interface
-
+import { BlockComponent } from '../block/block.component';
+import { CanvasComponent } from '../canvas/canvas.component';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,11 @@ import { BlockComponent } from '../block/block.component'; // adjust the path to
 export class BlockCollisionService {
   private blocksSubject = new BehaviorSubject<BlockComponent[]>([]);
   blocksOnCanvas$ = this.blocksSubject.asObservable();
+  private canvas!: CanvasComponent;
+
+  setCanvas(canvas: CanvasComponent) {
+    this.canvas = canvas;
+  }
 
   addBlock(block: BlockComponent) {
     console.log("added ", typeof block)
@@ -30,6 +35,19 @@ export class BlockCollisionService {
       otherBlock !== block &&
       block.isOverlapping(otherBlock)
     );
+  }
+
+  isBlockOnCanvas(block:BlockComponent){
+    const nativeCanvas  = this.canvas.getNativeCanvas()
+    const canvasRect = nativeCanvas.getBoundingClientRect();
+    let { x, y } = block.getCenter();
+
+    return x >= canvasRect.left && x <= canvasRect.right;
+
+  }
+
+  allBlocksNotOnCanvas(): BlockComponent[]{
+    return this.blocksSubject.getValue().filter(block => !this.isBlockOnCanvas(block));
   }
 
 }

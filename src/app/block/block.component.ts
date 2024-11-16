@@ -1,7 +1,8 @@
-import {Component, Input, HostListener, OnInit, OnDestroy, ElementRef} from '@angular/core';
+import {Component, Input, HostListener, OnInit, OnDestroy, ElementRef, ComponentRef} from '@angular/core';
 import {NgStyle} from '@angular/common';
 import {BlockCollisionService} from '../block-collision-service/block-collision-service.component';
 import { FormsModule } from '@angular/forms';
+import {Block} from '@angular/compiler';
 
 @Component({
   selector: 'app-block',
@@ -14,6 +15,8 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export abstract class BlockComponent implements OnInit, OnDestroy {
+  protected isViewOnly: boolean = false;
+
   abstract color: string;
   abstract width: number;
   abstract height: number;
@@ -29,9 +32,13 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
   public nextBlock: BlockComponent | null = null;
 
   constructor(
-    private el: ElementRef,
-    private blockCollisionService: BlockCollisionService
-  ) {}
+    private blockCollisionService: BlockCollisionService,
+    ) {}
+
+  public setViewOnly(){
+    this.isViewOnly = true;
+    this.blockCollisionService.removeBlock(this);
+  }
 
   ngOnInit() {
     this.blockCollisionService.addBlock(this);
@@ -42,6 +49,7 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
   }
 
   initialize(x: number, y: number) {
+    this.isDragging = true;
     this.x = x;
     this.y = y;
   }
@@ -66,6 +74,12 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
     const dx = otherBlock.x - this.x;
     const dy = otherBlock.y - this.y;
     return Math.sqrt(dx**2 + dy**2);
+  }
+
+  getCenter():{x:number, y:number}{
+    const centerX = this.x + this.width / 2;
+    const centerY = this.y + this.height / 2;
+    return { x: centerX, y: centerY };
   }
 
   private checkCollisions(): BlockComponent | null {
@@ -124,17 +138,23 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
   }
 
 
+
+
   // below all handles moving blocks with mouse and touchscreen
+
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
-    this.isDragging = true;
-    this.startX = event.clientX - this.x;
-    this.startY = event.clientY - this.y;
+    if (!this.isViewOnly) {
+      this.isDragging = true;
+      this.startX = event.clientX - this.x;
+      this.startY = event.clientY - this.y;
+    }
   }
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
-    if (this.isDragging) {
+    if (this.isDragging && !this.isViewOnly) {
+      console.log(this.blockCollisionService.isBlockOnCanvas(this));
       this.disconnectBlockAbove()
       this.move(event.clientX - this.startX, event.clientY - this.startY)
     }
@@ -142,9 +162,13 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
 
   @HostListener('document:mouseup')
   onMouseUp() {
-    if(this.isDragging){
-      let touching_block:BlockComponent | null = this.checkCollisions();
-      if (touching_block) { this.insertUnderneath(touching_block); }
+    if(this.isDragging && !this.isViewOnly){
+      if (this.blockCollisionService.isBlockOnCanvas(this)) {
+        let touching_block: BlockComponent | null = this.checkCollisions();
+        if (touching_block) {
+          this.insertUnderneath(touching_block);
+        }
+      }
     }
     this.isDragging = false;
   }

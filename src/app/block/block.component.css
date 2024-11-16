@@ -1,6 +1,6 @@
 .block-container {
     border: 1px solid #333; /* Border to make it visible */
-    position: absolute;
+    position: fixed;
     margin: 10px; /* Space between blocks */
     cursor: move; /* Indicate that it's draggable */
     transition: background-color 0.2s; /* Smooth color transition */
@@ -9,6 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 h1{
@@ -26,4 +27,11 @@ p{
 
 .block-container:active {
     cursor: grabbing;
+}
+
+.no-interact {
+  pointer-events: none;  /* Disables mouse interactions like click, hover, etc. */
+  user-select: none;     /* Prevents text selection */
+  touch-action: none;    /* Disables touch interactions like scrolling and pinch-to-zoom */
+  cursor: not-allowed;   /* Optional: Change cursor to indicate non-interactivity */
 }

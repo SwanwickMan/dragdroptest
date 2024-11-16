@@ -3,7 +3,7 @@ import { BlockComponent } from '../../block.component';
 import {NgStyle} from '@angular/common';
 
 @Component({
-  selector: 'app-basic-filtering',
+  selector: 'app-plot-dimension-reduction',
   standalone: true,
   imports: [
     NgStyle

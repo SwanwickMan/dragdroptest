@@ -1,7 +1,5 @@
-import {Component, ComponentRef, Type, ViewChild, ViewContainerRef} from '@angular/core';
-import { CdkDropList, CdkDragDrop } from '@angular/cdk/drag-drop';
+import {AfterViewInit, Component, ComponentRef, HostListener, Type, ViewChild, ViewContainerRef} from '@angular/core';
 import { BlockComponent } from '../block/block.component';
-import {NgForOf} from '@angular/common';
 import {BlockCollisionService} from '../block-collision-service/block-collision-service.component';
 import {BasicFilteringComponent} from '../block/block-implementations/basic-filtering/basic-filtering.component';
 import {QualityControlPlots} from '../block/block-implementations/quality-control-plots/quality-control-plots.component';
@@ -20,6 +18,10 @@ import {
 import {
   IdentifyHighlyVariableGenes
 } from '../block/block-implementations/identify-highly-variable-genes/identify-highly-variable-genes.component';
+import {BlockLibraryComponent} from '../block-library/block-library.component';
+import {CanvasComponent} from '../canvas/canvas.component';
+import {BlockGeneratorComponent} from '../block/block-generator/block-generator.component';
+import {OutputDisplayComponent} from '../output-display/output-display.component';
 
 
 @Component({
@@ -27,26 +29,51 @@ import {
     templateUrl: './workspace.component.html',
     styleUrls: ['./workspace.component.css'],
     standalone: true,
-    imports: []
+  imports: [
+    BlockLibraryComponent,
+    CanvasComponent,
+    BlockGeneratorComponent,
+    OutputDisplayComponent,
+  ]
 })
-export class WorkspaceComponent {
+export class WorkspaceComponent implements AfterViewInit{
   @ViewChild('dynamicContainer', { read: ViewContainerRef, static: true })
   dynamicContainer!: ViewContainerRef;
+  @ViewChild(CanvasComponent)
+  canvas!: CanvasComponent;
+  instanceToRef: Map<BlockComponent, ComponentRef<BlockComponent>> = new Map();
 
-  constructor(private blockCollisionService: BlockCollisionService) {
+
+  constructor(private blockCollisionService: BlockCollisionService) {}
+
+  ngAfterViewInit() {
+    this.blockCollisionService.setCanvas(this.canvas);
   }
 
-  addBlock(childType: Type<BlockComponent>): void {
-    const componentRef= this.dynamicContainer.createComponent(childType);
-    componentRef.instance.initialize(30, 30);
+  addBlock(childType: Type<BlockComponent>, x: number, y: number): void {
+    const componentRef = this.dynamicContainer.createComponent(childType);
+    componentRef.instance.initialize(x, y);
+    this.instanceToRef.set(componentRef.instance, componentRef);
   }
 
-  removeBlock(blockRef: ComponentRef<BlockComponent>): void {
-    blockRef.destroy();
+  removeBlock(blockRef: ComponentRef<BlockComponent> | undefined): void {
+    if (blockRef) {
+      blockRef.destroy();
+      this.instanceToRef.delete(blockRef.instance);
+    }
   }
 
   removeAllBlocks(){
+    this.instanceToRef.clear();
     this.dynamicContainer.clear();
+  }
+
+  @HostListener('document:mouseup')
+  removeBlocksOffCanvas(){
+    let removeList = this.blockCollisionService.allBlocksNotOnCanvas();
+    removeList.forEach(block => {
+      this.removeBlock(this.instanceToRef.get(block));
+    });
   }
 
   protected readonly BasicFilteringComponent = BasicFilteringComponent;

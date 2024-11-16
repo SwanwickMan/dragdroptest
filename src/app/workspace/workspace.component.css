@@ -3,6 +3,16 @@
     height: 100vh; /* Set a fixed height */
     border: 2px dashed #ccc; /* Visible border for the workspace */
     position: relative; /* To position children if needed */
-    overflow: auto; /* Enable scrolling if content overflows */
     background-color: #f9f9f9; /* Light background for visibility */
+}
+
+.horizontal-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    min-width: 100%;
+}
+
+.workspace div{
+  background-color: #710000;
 }

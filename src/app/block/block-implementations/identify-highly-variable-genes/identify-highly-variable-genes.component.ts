@@ -3,7 +3,7 @@ import { BlockComponent } from '../../block.component';
 import {NgStyle} from '@angular/common';
 
 @Component({
-  selector: 'app-basic-filtering',
+  selector: 'identify-highly-variable-genes',
   standalone: true,
   imports: [
     NgStyle

@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { BlockComponent } from '../../block.component';
-import {NgStyle} from '@angular/common';
+import {NgClass, NgStyle} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
 @Component({
-  selector: 'app-basic-filtering',
+  selector: 'app-load-data',
   standalone: true,
   imports: [
     NgStyle,
-    FormsModule
+    FormsModule,
+    NgClass,
   ],
   templateUrl: './load-data.component.html',
   styleUrl: '../../block.component.css'
@@ -18,5 +19,5 @@ export class LoadData extends BlockComponent{
   width: number = 200;
   color: string = "yellow";
 
-  selectedDataSet: string = "";
+  selectedDataSet: string = "1";
 }
