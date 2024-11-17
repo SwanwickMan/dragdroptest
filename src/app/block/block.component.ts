@@ -2,7 +2,6 @@ import {Component, Input, HostListener, OnInit, OnDestroy, ElementRef, Component
 import {NgStyle} from '@angular/common';
 import {BlockCollisionService} from '../block-collision-service/block-collision-service.component';
 import { FormsModule } from '@angular/forms';
-import {Block} from '@angular/compiler';
 
 @Component({
   selector: 'app-block',

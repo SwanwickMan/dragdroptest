@@ -12,6 +12,7 @@ import {
 import {BlockComponent} from '../block.component';
 import {WorkspaceComponent} from '../../workspace/workspace.component';
 import {NgStyle} from '@angular/common';
+import {LoadData} from '../block-implementations/load-data/load-data.component';
 
 @Component({
   selector: 'app-block-generator',
@@ -43,6 +44,10 @@ export class BlockGeneratorComponent {
 
   @HostListener('mousedown', ['$event'])
   onClick(event: MouseEvent){
+    if (this.componentRef.instance instanceof LoadData) {
+      if (LoadData.hasInstance){ return }
+      LoadData.hasInstance = true;
+    }
     const x = event.clientX
     const y = event.clientY
 

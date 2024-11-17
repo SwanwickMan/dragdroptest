@@ -19,5 +19,20 @@ export class LoadData extends BlockComponent{
   width: number = 200;
   color: string = "yellow";
 
+  public static hasInstance: boolean = false;
+
   selectedDataSet: string = "1";
+
+
+
+  // Do not allow LoadData to insert beneath other blocks
+  override insertUnderneath(block: BlockComponent) {
+    return;
+  }
+
+  // When destroyed allow new instances to be created
+  override ngOnDestroy() {
+    LoadData.hasInstance = false;
+    super.ngOnDestroy();
+  }
 }
