@@ -1,5 +1,6 @@
 <div
       class="block-container"
+      [ngClass]="{ glow: isDragging }"
       [ngStyle]="{
         width: width + 'px',
         height: height + 'px',
@@ -13,4 +14,6 @@
     <option value="1" selected>Peripheral Blood Mononuclear cells</option>
     <option value="2" >Malaria Cells Atlus P. falciparum</option>
   </select>
+
+
 </div>

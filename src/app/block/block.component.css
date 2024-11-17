@@ -16,8 +16,14 @@
     position: absolute;
 }
 
+.block-container:active {
+    cursor: grabbing;
+}
+
+
 h1{
   font-size: 20px;
+  text-align: center;
 }
 
 p{
@@ -29,13 +35,14 @@ p{
   width: 80%;
 }
 
-.block-container:active {
-    cursor: grabbing;
-}
-
 .no-interact {
   pointer-events: none;  /* Disables mouse interactions like click, hover, etc. */
   user-select: none;     /* Prevents text selection */
   touch-action: none;    /* Disables touch interactions like scrolling and pinch-to-zoom */
   cursor: not-allowed;   /* Optional: Change cursor to indicate non-interactivity */
+}
+
+.glow {
+  box-shadow: 0 0 10px 5px black;
+  transition: box-shadow 0.15s ease-in-out;
 }

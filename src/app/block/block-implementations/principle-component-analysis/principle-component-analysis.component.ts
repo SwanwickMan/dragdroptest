@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { BlockComponent } from '../../block.component';
-import {NgStyle} from '@angular/common';
+import {NgClass, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-principle-component-analysis',
   standalone: true,
   imports: [
-    NgStyle
+    NgStyle,
+    NgClass
   ],
   templateUrl: './principle-component-analysis.component.html',
   styleUrl: '../../block.component.css'

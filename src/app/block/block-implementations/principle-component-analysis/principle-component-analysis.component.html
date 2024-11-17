@@ -1,5 +1,6 @@
 <div
       class="block-container"
+      [ngClass]="{ glow: isDragging }"
       [ngStyle]="{
         width: width + 'px',
         height: height + 'px',
@@ -8,9 +9,5 @@
       }"
     >
 
-  <p>
-    Prev: {{previousBlock}} <br>
-    Principle Component Analysis<br>
-    Next: {{nextBlock}} <br>
-  </p>
+  <h1> Principle Component Analysis </h1>
 </div>

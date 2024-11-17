@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { BlockComponent } from '../../block.component';
-import {NgStyle} from '@angular/common';
+import {NgClass, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-run-umap',
   standalone: true,
   imports: [
-    NgStyle
+    NgStyle,
+    NgClass
   ],
   templateUrl: './run-umap.component.html',
   styleUrl: '../../block.component.css'

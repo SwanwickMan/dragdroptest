@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { BlockComponent } from '../../block.component';
-import {NgStyle} from '@angular/common';
+import {NgClass, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-quality-control-plots.component',
   standalone: true,
   imports: [
-    NgStyle
+    NgStyle,
+    NgClass
   ],
   templateUrl: './quality-control-plots.component.html',
   styleUrl: '../../block.component.css'

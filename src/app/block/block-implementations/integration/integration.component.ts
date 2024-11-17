@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { BlockComponent } from '../../block.component';
-import {NgStyle} from '@angular/common';
+import {NgClass, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-integration',
   standalone: true,
   imports: [
-    NgStyle
+    NgStyle,
+    NgClass
   ],
   templateUrl: './integration.component.html',
   styleUrl: '../../block.component.css'

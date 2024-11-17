@@ -1,5 +1,6 @@
 <div
       class="block-container"
+      [ngClass]="{ glow: isDragging }"
       [ngStyle]="{
         width: width + 'px',
         height: height + 'px',
@@ -8,9 +9,9 @@
       }"
     >
 
-  <p>
-    Prev: {{previousBlock}} <br>
-    Identify Highly Variable Genes<br>
-    Next: {{nextBlock}} <br>
-  </p>
+  <h1> Quality Control Filtering </h1>
+
+  <div> <p>Minimum Mean</p> <input [(ngModel)]="minMean" type="number" min="0" [defaultValue]=minMean /> </div>
+  <div> <p>Maximum Mean</p> <input [(ngModel)]="maxMean" type="number" min="0" [defaultValue]=maxMean /> </div>
+  <div> <p>Minimum Dispersion</p> <input [(ngModel)]="minDispersion" type="number" min="0" [defaultValue]=minDispersion /> </div>
 </div>

@@ -53,6 +53,7 @@ export class WorkspaceComponent implements AfterViewInit{
   addBlock(childType: Type<BlockComponent>, x: number, y: number): void {
     const componentRef = this.dynamicContainer.createComponent(childType);
     componentRef.instance.initialize(x, y);
+    componentRef.instance.centerCorrectCoords();
     this.instanceToRef.set(componentRef.instance, componentRef);
   }
 
@@ -66,6 +67,15 @@ export class WorkspaceComponent implements AfterViewInit{
   removeAllBlocks(){
     this.instanceToRef.clear();
     this.dynamicContainer.clear();
+  }
+
+  executeBlocks(){
+    for (let [blockComponent, componentRef] of this.instanceToRef.entries()) {
+      if(blockComponent instanceof LoadData) {
+        console.log(blockComponent.getExecutionStuff());
+        return;
+      }
+}
   }
 
   @HostListener('document:mouseup')

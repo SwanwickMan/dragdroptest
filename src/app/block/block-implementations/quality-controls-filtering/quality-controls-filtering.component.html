@@ -1,5 +1,6 @@
 <div
       class="block-container"
+      [ngClass]="{ glow: isDragging }"
       [ngStyle]="{
         width: width + 'px',
         height: height + 'px',
@@ -7,10 +8,11 @@
         background: color,
       }"
     >
-
-  <p>
-    Prev: {{previousBlock}} <br>
-    Quality Controls Filtering<br>
-    Next: {{nextBlock}} <br>
-  </p>
+  <h1> Quality Control Filtering </h1>
+  <select id="dataset" [(ngModel)]="selectedSample">
+    <option value="1" selected>1</option>
+  </select>
+  <div> <p>Minimum Genes Per Cell</p> <input [(ngModel)]="genesPerCell" type="number" min="0" [defaultValue]=genesPerCell /> </div>
+  <div> <p>Minimum Cells Per Gene</p> <input [(ngModel)]="cellsPerGene" type="number" min="0" [defaultValue]=cellsPerGene /> </div>
+  <div> <p>Maximum % Mitochondrial Genes</p> <input [(ngModel)]="MaxPerMitochondrialGenes" type="number" min="0" [defaultValue]=MaxPerMitochondrialGenes /> </div>
 </div>

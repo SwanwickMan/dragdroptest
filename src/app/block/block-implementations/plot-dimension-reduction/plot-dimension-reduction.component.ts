@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { BlockComponent } from '../../block.component';
-import {NgStyle} from '@angular/common';
+import {NgClass, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-plot-dimension-reduction',
   standalone: true,
   imports: [
-    NgStyle
+    NgStyle,
+    NgClass
   ],
   templateUrl: './plot-dimension-reduction.component.html',
   styleUrl: '../../block.component.css'

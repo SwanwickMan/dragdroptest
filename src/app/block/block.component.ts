@@ -24,7 +24,7 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
   x: number = 0; // Current X position
   y: number = 0; // Current Y position
 
-  private isDragging = false;
+  protected isDragging = false;
   private startX = 0;
   private startY = 0;
 
@@ -54,6 +54,10 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
     this.y = y;
   }
 
+  public getExecutionStuff(): string{
+    return this.constructor.name + "\n" + (this.nextBlock ? this.nextBlock.getExecutionStuff() : "");
+  }
+
   private move(x: number, y: number) {
     this.x = x;
     this.y = y;
@@ -80,6 +84,13 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
     const centerX = this.x + this.width / 2;
     const centerY = this.y + this.height / 2;
     return { x: centerX, y: centerY };
+  }
+
+  centerCorrectCoords(){
+    this.x = this.x - this.width / 2;
+    this.y = this.y - this.height / 2;
+    this.startX += this.width / 2;
+    this.startY += this.height / 2;
   }
 
   private checkCollisions(): BlockComponent | null {

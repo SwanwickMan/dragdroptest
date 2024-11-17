@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BlockComponent } from '../../block.component';
-import {NgStyle} from '@angular/common';
+import {NgClass, NgStyle} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
 @Component({
@@ -8,14 +8,15 @@ import {FormsModule} from '@angular/forms';
   standalone: true,
   imports: [
     NgStyle,
-    FormsModule
+    FormsModule,
+    NgClass
   ],
   templateUrl: './basic-filtering.component.html',
   styleUrl: '../../block.component.css'
 })
 export class BasicFilteringComponent extends BlockComponent{
-  height: number = 120;
-  width: number = 180;
+  height: number = 130;
+  width: number = 190;
   color: string = "skyblue";
 
   minimumGenesPerCell: number = 200;
