@@ -18,7 +18,9 @@ export class IdentifyHighlyVariableGenes extends BlockComponent{
   height: number = 160;
   width: number = 250;
   color: string = "green";
+
   minMean: number = 0.0125;
   maxMean: number = 3;
   minDispersion: number = 0.5;
+
 }

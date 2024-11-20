@@ -42,17 +42,23 @@ export class BlockGeneratorComponent {
     }
   }
 
-  @HostListener('mousedown', ['$event'])
-  onClick(event: MouseEvent){
+  onPressDown(x:number, y:number){
     if (this.componentRef.instance instanceof LoadData) {
       if (LoadData.hasInstance){ return }
       LoadData.hasInstance = true;
     }
-    const x = event.clientX
-    const y = event.clientY
-
     this.workspace.addBlock(this.componentRef.componentType, x, y);
     console.log(this.componentRef.componentType.name);
+  }
+
+  @HostListener('mousedown', ['$event'])
+  onClick(event: MouseEvent){
+    this.onPressDown(event.clientX, event.clientY);
+  }
+
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    this.onPressDown(event.touches[0].clientX, event.touches[0].clientY);
   }
 
 

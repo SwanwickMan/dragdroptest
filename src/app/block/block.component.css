@@ -1,7 +1,7 @@
 .block-container {
     border: 1px solid #333; /* Border to make it visible */
     margin: 10px; /* Space between blocks */
-    cursor: move; /* Indicate that it's draggable */
+    cursor: pointer; /* Indicate that it's draggable */
     transition: background-color 0.2s; /* Smooth color transition */
     user-select: none;
     flex-direction: column;
