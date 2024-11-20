@@ -79,6 +79,7 @@ export class WorkspaceComponent implements AfterViewInit{
   }
 
   @HostListener('document:mouseup')
+  @HostListener('document:touchend')
   removeBlocksOffCanvas(){
     let removeList = this.blockCollisionService.allBlocksNotOnCanvas();
     removeList.forEach(block => {
