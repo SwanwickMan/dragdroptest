@@ -22,6 +22,8 @@ import {BlockLibraryComponent} from '../block-library/block-library.component';
 import {CanvasComponent} from '../canvas/canvas.component';
 import {BlockGeneratorComponent} from '../block/block-generator/block-generator.component';
 import {OutputDisplayComponent} from '../output-display/output-display.component';
+import {BehaviorSubject} from 'rxjs';
+import {BlockService} from '../block-service/block-service.component';
 
 
 @Component({
@@ -41,10 +43,11 @@ export class WorkspaceComponent implements AfterViewInit{
   dynamicContainer!: ViewContainerRef;
   @ViewChild(CanvasComponent)
   canvas!: CanvasComponent;
+
   instanceToRef: Map<BlockComponent, ComponentRef<BlockComponent>> = new Map();
 
 
-  constructor(private blockCollisionService: BlockCollisionService) {}
+  constructor(private blockService: BlockService, private blockCollisionService: BlockCollisionService) {}
 
   ngAfterViewInit() {
     this.blockCollisionService.setCanvas(this.canvas);
@@ -54,6 +57,7 @@ export class WorkspaceComponent implements AfterViewInit{
     const componentRef = this.dynamicContainer.createComponent(childType);
     componentRef.instance.initialize(x, y);
     componentRef.instance.centerCorrectCoords();
+    this.blockService.addBlock(componentRef);
     this.instanceToRef.set(componentRef.instance, componentRef);
   }
 
@@ -85,6 +89,10 @@ export class WorkspaceComponent implements AfterViewInit{
     removeList.forEach(block => {
       this.removeBlock(this.instanceToRef.get(block));
     });
+  }
+
+  centerCanvas(){
+    this.canvas.centerCanvas();
   }
 
   protected readonly BasicFilteringComponent = BasicFilteringComponent;

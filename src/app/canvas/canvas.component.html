@@ -1,8 +1,13 @@
-<div
-  id="canvas"
-  #canvasElement
-  [ngStyle]="{
-    'height': height + 'px',
-    'width': width + 'px',
-  }">
+<div id="canvas"
+     class="jigsaw-background"
+      #canvasElement
+      [ngStyle]="{
+        width: width+'px',
+        height: height+'px',
+        transform: 'translate(' + x + 'px, ' + y + 'px)',
+
+      }"
+    >
+  <ng-content></ng-content>
+
 </div>

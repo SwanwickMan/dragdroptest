@@ -11,8 +11,29 @@
     flex-direction: row;
     justify-content: space-around;
     min-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
 }
 
-.workspace div{
-  background-color: #710000;
+#canvas-container {
+  overflow: hidden; /* Hide the parts of the canvas that go beyond the container */
 }
+
+#canvas-button-container {
+  width: 60%;
+  position: absolute;
+  box-sizing: border-box; /* Position buttons absolutely inside the container */
+  padding: 10px 20px;
+  z-index: 100000000000000; /* Ensure buttons appear on top of the content */
+}
+
+#canvas-button-container button {
+  position: relative;  /* Position buttons absolutely inside the container */
+  background-color: transparent;  /* Make the background transparent */
+  border: 2px dot-dot-dash black;  /* Optional: border for the buttons */
+  color: black;  /* Text color */
+  padding: 10px 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+

@@ -23,7 +23,7 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
   x: number = 0; // Current X position
   y: number = 0; // Current Y position
 
-  protected isDragging = false;
+  public isDragging = false;
   private startX = 0;
   private startY = 0;
 
@@ -64,6 +64,16 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
     if (this.nextBlock) {
       this.nextBlock.move(x, y+this.height); // Adjust y position for each block below
     }
+  }
+
+  public relative_move(x: number, y: number) {
+    this.x += x;
+    this.y += y;
+  }
+
+  public move_this(x: number, y: number) {
+    this.x = x;
+    this.y = y;
   }
 
   isOverlapping(otherBlock: BlockComponent): boolean {

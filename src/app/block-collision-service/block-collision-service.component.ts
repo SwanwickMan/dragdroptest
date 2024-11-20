@@ -42,7 +42,8 @@ export class BlockCollisionService {
     const canvasRect = nativeCanvas.getBoundingClientRect();
     let { x, y } = block.getCenter();
 
-    return x >= canvasRect.left && x <= canvasRect.right;
+    return x >= canvasRect.left && x <= canvasRect.right
+          && y >= canvasRect.top && y <= canvasRect.bottom;
 
   }
 
