@@ -45,5 +45,5 @@ p{
 .glow {
   box-shadow: 0 0 10px 5px black;
   transition: box-shadow 0.15s ease-in-out;
-  z-index: 10000;
+  z-index: 1001; /* one more than divs */
 }
