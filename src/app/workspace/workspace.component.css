@@ -17,6 +17,10 @@
     padding-right: 0;
 }
 
+#library-container{
+  min-width: 300px;
+}
+
 #canvas-container {
   overflow: hidden; /* Hide the parts of the canvas that go beyond the container */
   user-select: none;

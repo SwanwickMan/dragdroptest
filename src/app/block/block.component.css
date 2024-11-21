@@ -31,8 +31,12 @@ p{
   margin: auto;
 }
 
-#dataset{
+.box-drop-down{
   width: 80%;
+}
+
+#integration{
+  width: 90%;
 }
 
 .no-interact {

@@ -9,7 +9,7 @@
       }"
     >
   <h1> Quality Control Filtering </h1>
-  <select id="dataset" [(ngModel)]="selectedSample">
+  <select class="box-drop-down" [(ngModel)]="selectedSample">
     <option value="1" selected>1</option>
   </select>
   <div> <p>Minimum Genes Per Cell</p> <input [(ngModel)]="genesPerCell" type="number" min="0" [defaultValue]=genesPerCell /> </div>

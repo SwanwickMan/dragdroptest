@@ -9,7 +9,14 @@
       }"
     >
 
-  <p>
-    Plot Dimension Reduction<br>
-  </p>
+  <h1>Plot Dimension Reduction</h1>
+  <select class="box-drop-down" [(ngModel)]="colorBy">
+    <option value="leiden">leiden</option>
+    <option value="sample">sample</option>
+  </select>
+  <select class="box-drop-down" [(ngModel)]="reduction">
+    <option value="PCA">PCA</option>
+    <option value="UMAP">UMAP</option>
+    <option value="TSNE">TSNE</option>
+  </select>
 </div>

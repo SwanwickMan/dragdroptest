@@ -16,8 +16,8 @@ export class CanvasComponent implements OnInit{
   @ViewChild('canvasElement', { static: true }) canvasRef!: ElementRef<HTMLDivElement>;
   private blocks: BlockComponent[] = [];
 
-  width: number = 1000;
-  height: number = 1000;
+  width: number = 10000;
+  height: number = 10000;
 
   isDragging: boolean = false;
   isViewOnly: boolean = false;
@@ -53,8 +53,9 @@ export class CanvasComponent implements OnInit{
   }
 
   public centerCanvas(){
-    this.x=-this.width/2;
-    this.y=-this.height/2
+    // this.x=-this.width/2;
+    // this.y=-this.height/2;
+    this.move(-this.width/2, -this.height/2)
   }
 
   onPressDown(x:number,y:number){
