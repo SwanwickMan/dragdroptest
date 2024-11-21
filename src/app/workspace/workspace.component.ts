@@ -3,7 +3,6 @@ import {
   Component,
   ComponentRef,
   ElementRef,
-  HostListener,
   Type,
   ViewChild,
   ViewContainerRef
@@ -64,7 +63,7 @@ export class WorkspaceComponent implements AfterViewInit{
 
   addBlock(childType: Type<BlockComponent>, x: number, y: number): void {
     const componentRef = this.dynamicContainer.createComponent(childType);
-    componentRef.instance.initialize(x, y);
+    componentRef.instance.initialize(x, y, window.scrollX, window.scrollY);
     componentRef.instance.centerCorrectCoords();
     this.blockService.addBlock(componentRef);
     this.instanceToRef.set(componentRef.instance, componentRef);

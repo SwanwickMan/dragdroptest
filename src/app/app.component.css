@@ -1,0 +1,24 @@
+.horizontal-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+    padding: 10px 10px 20px;
+    background-color: #3498db; /* Choose any background color */
+    border-radius: 15px; /* Adjust the radius for rounded edges */
+    width: fit-content;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  text-align: center;
+}
+
+#title {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: auto;
+    h1 {
+        margin-bottom: 0;
+    }
+}

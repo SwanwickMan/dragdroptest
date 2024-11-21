@@ -21,15 +21,15 @@ export abstract class BlockComponent {
   abstract width: number;
   abstract height: number;
 
-  x: number = 0; // Current X position
-  y: number = 0; // Current Y position
+  protected x: number = 0; // Current X position
+  protected y: number = 0; // Current Y position
 
   public isDragging = false;
   private startX = 0;
   private startY = 0;
 
-  public previousBlock: BlockComponent | null = null;
-  public nextBlock: BlockComponent | null = null;
+  private previousBlock: BlockComponent | null = null;
+  private nextBlock: BlockComponent | null = null;
 
   constructor(
     private blockCollisionService: BlockCollisionService,
@@ -45,10 +45,12 @@ export abstract class BlockComponent {
     this.blockService.removeBlock(this);
   }
 
-  initialize(x: number, y: number) {
+  public initialize(x: number, y: number, scrollX: number, scrollY: number) {
     this.isDragging = true;
-    this.x = x;
-    this.y = y;
+    this.x = x + scrollX;
+    this.y = y + scrollY;
+    this.startX = -scrollX;
+    this.startY = -scrollY;
   }
 
   public getExecutionStuff(): string{
@@ -69,7 +71,7 @@ export abstract class BlockComponent {
     this.y += y;
   }
 
-  isOverlapping(otherBlock: BlockComponent): boolean {
+  public isOverlapping(otherBlock: BlockComponent): boolean {
   return this.x + this.width > otherBlock.x &&
          this.x < otherBlock.x + otherBlock.width &&
          this.y + this.height > otherBlock.y &&
@@ -82,13 +84,13 @@ export abstract class BlockComponent {
     return Math.sqrt(dx**2 + dy**2);
   }
 
-  getCenter():{x:number, y:number}{
+  public getCenter():{x:number, y:number}{
     const centerX = this.x + this.width / 2;
     const centerY = this.y + this.height / 2;
     return { x: centerX, y: centerY };
   }
 
-  centerCorrectCoords(){
+  public centerCorrectCoords(){
     this.x = this.x - this.width / 2;
     this.y = this.y - this.height / 2;
     this.startX += this.width / 2;
@@ -123,7 +125,7 @@ export abstract class BlockComponent {
     this.nextBlock = block;
   }
 
-  insertUnderneath(block: BlockComponent) {
+  public insertUnderneath(block: BlockComponent) {
     let nextBlock= block.nextBlock;
 
     block.connect(this);
@@ -149,7 +151,8 @@ export abstract class BlockComponent {
     }
   }
 
-  disconnectBlockAbove(){
+
+  public disconnectBlockAbove(){
     if (this.previousBlock != null){
       this.previousBlock.nextBlock = null;
       this.previousBlock = null;
@@ -157,10 +160,8 @@ export abstract class BlockComponent {
   }
 
 
-
-
   // below all handles moving blocks with mouse and touchscreen needs overhaul
-  onPressDown(x:number,y:number){
+  private onPressDown(x:number,y:number){
     if (!this.isViewOnly) {
       this.isDragging = true;
       this.startX = x - this.x;
@@ -168,7 +169,7 @@ export abstract class BlockComponent {
     }
   }
 
-  onPressMove(x:number,y:number) {
+  private onPressMove(x:number,y:number) {
     if (this.isDragging && !this.isViewOnly) {
       console.log(this.blockCollisionService.isBlockOnCanvas(this));
       this.disconnectBlockAbove()
@@ -176,7 +177,7 @@ export abstract class BlockComponent {
     }
   }
 
-  onPressRelease() {
+  private onPressRelease() {
     if(this.isDragging && !this.isViewOnly){
       if (this.isBlockPositionIsValid()) {
         let touching_block: BlockComponent | null = this.checkCollisions();
@@ -193,33 +194,33 @@ export abstract class BlockComponent {
   }
 
   @HostListener('mousedown', ['$event'])
-  onMouseDown(event: MouseEvent) {
+  private onMouseDown(event: MouseEvent) {
     this.onPressDown(event.clientX, event.clientY);
   }
 
   @HostListener('document:mousemove', ['$event'])
-  onMouseMove(event: MouseEvent) {
+  private onMouseMove(event: MouseEvent) {
     this.onPressMove(event.clientX, event.clientY);
   }
 
   @HostListener('document:mouseup')
-  onMouseUp() {
+  private onMouseUp() {
     this.onPressRelease();
   }
 
   // touch screen stuff
   @HostListener('touchstart', ['$event'])
-  onTouchStart(event: TouchEvent) {
+  private onTouchStart(event: TouchEvent) {
     this.onPressDown(event.touches[0].clientX, event.touches[0].clientY);
   }
 
   @HostListener('document:touchmove', ['$event'])
-  onTouchMove(event: TouchEvent) {
+  private onTouchMove(event: TouchEvent) {
     this.onPressMove(event.touches[0].clientX, event.touches[0].clientY);
   }
 
   @HostListener('document:touchend')
-  onTouchEnd() {
+  private onTouchEnd() {
     this.onPressRelease();
   }
 

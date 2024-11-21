@@ -3,7 +3,8 @@ import { WorkspaceComponent } from './workspace/workspace.component'; // Adjust 
 
 @Component({
     selector: 'app-root',
-    template: '<app-workspace></app-workspace>', // Use the workspace component directly
+    templateUrl: 'app.component.html', // Use the workspace component directly
+    styleUrl: 'app.component.css',
     standalone: true,
     imports: [WorkspaceComponent] // Import the workspace component
 })

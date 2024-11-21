@@ -4,6 +4,8 @@
     border: 2px dashed #ccc; /* Visible border for the workspace */
     position: relative; /* To position children if needed */
     background-color: #f9f9f9; /* Light background for visibility */
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .horizontal-container {
@@ -18,6 +20,13 @@
 #canvas-container {
   overflow: hidden; /* Hide the parts of the canvas that go beyond the container */
   user-select: none;
+  p{
+    text-align: center;
+    position: relative;
+    top:50%;
+    font-family: 'Cursive', 'Times New Roman', serif; /* Cursive font with fallback */
+    font-style: italic; /* Make the text italic for a more cursive feel */
+  }
 }
 
 #canvas-button-container {
