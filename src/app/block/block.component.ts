@@ -2,6 +2,7 @@ import {Component, Input, HostListener, OnInit, OnDestroy, ElementRef, Component
 import {NgStyle} from '@angular/common';
 import {BlockCollisionService} from '../block-collision-service/block-collision-service.component';
 import { FormsModule } from '@angular/forms';
+import {BlockService} from '../block-service/block-service.component';
 
 @Component({
   selector: 'app-block',
@@ -13,7 +14,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
 })
-export abstract class BlockComponent implements OnInit, OnDestroy {
+export abstract class BlockComponent implements OnDestroy {
   protected isViewOnly: boolean = false;
 
   abstract color: string;
@@ -32,19 +33,15 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
 
   constructor(
     private blockCollisionService: BlockCollisionService,
+    private blockService: BlockService,
     ) {}
 
   public setViewOnly(){
     this.isViewOnly = true;
-    this.blockCollisionService.removeBlock(this);
-  }
-
-  ngOnInit() {
-    this.blockCollisionService.addBlock(this);
   }
 
   ngOnDestroy() {
-    this.blockCollisionService.removeBlock(this);
+    this.blockService.removeBlock(this);
   }
 
   initialize(x: number, y: number) {
@@ -104,6 +101,7 @@ export abstract class BlockComponent implements OnInit, OnDestroy {
 
   private checkCollisions(): BlockComponent | null {
     const collisions = this.blockCollisionService.getCollisionsForBlock(this);
+    console.log(collisions)
     if (collisions.length > 0) {
       let minDistance = Infinity;
       let closestBlock: BlockComponent | null = null;

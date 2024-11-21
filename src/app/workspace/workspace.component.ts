@@ -22,7 +22,6 @@ import {BlockLibraryComponent} from '../block-library/block-library.component';
 import {CanvasComponent} from '../canvas/canvas.component';
 import {BlockGeneratorComponent} from '../block/block-generator/block-generator.component';
 import {OutputDisplayComponent} from '../output-display/output-display.component';
-import {BehaviorSubject} from 'rxjs';
 import {BlockService} from '../block-service/block-service.component';
 
 
@@ -62,15 +61,11 @@ export class WorkspaceComponent implements AfterViewInit{
   }
 
   removeBlock(blockRef: ComponentRef<BlockComponent> | undefined): void {
-    if (blockRef) {
-      blockRef.destroy();
-      this.instanceToRef.delete(blockRef.instance);
-    }
+    this.blockService.removeBlock(blockRef!.instance);
   }
 
   removeAllBlocks(){
-    this.instanceToRef.clear();
-    this.dynamicContainer.clear();
+    this.blockService.clearAllBlocks();
   }
 
   executeBlocks(){

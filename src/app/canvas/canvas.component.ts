@@ -12,8 +12,9 @@ import {BlockComponent} from '../block/block.component';
   templateUrl: './canvas.component.html',
   styleUrl: './canvas.component.css'
 })
-export class CanvasComponent{
+export class CanvasComponent implements OnInit{
   @ViewChild('canvasElement', { static: true }) canvasRef!: ElementRef<HTMLDivElement>;
+  private blocks: BlockComponent[] = [];
 
   width: number = 1000;
   height: number = 1000;
@@ -28,6 +29,12 @@ export class CanvasComponent{
 
   constructor(private blockService: BlockService) {}
 
+  ngOnInit(): void {
+    this.blockService.blocks$.subscribe((instances) => {
+      this.blocks = instances;
+    });
+  }
+
 
   // below all handles moving blocks with mouse and touchscreen needs overhaul
 
@@ -38,7 +45,7 @@ export class CanvasComponent{
     this.x = x;
     this.y = y;
 
-    this.blockService.getBlocks().forEach(block =>{
+    this.blocks.forEach(block =>{
       const deltaX = x - oldX;
       const deltaY = y - oldY;
       block.relative_move(deltaX,deltaY)
