@@ -4,6 +4,7 @@ import { CanvasComponent } from '../canvas/canvas.component';
 import {BlockService} from '../block-service/block-service.component';
 import {BlockLibraryComponent} from '../block-library/block-library.component';
 import {OutputDisplayComponent} from '../output-display/output-display.component';
+import {WorkspaceComponent} from '../workspace/workspace.component';
 
 
 @Injectable({
@@ -14,6 +15,7 @@ export class BlockCollisionService{
   private library!: BlockLibraryComponent;
   private canvas!: CanvasComponent;
   private outputDisplay!: OutputDisplayComponent;
+  private workspace!: HTMLDivElement;
 
   constructor(private blockService: BlockService) {
     this.blockService.blocks$.subscribe((instances) => {
@@ -21,7 +23,8 @@ export class BlockCollisionService{
     });
   }
 
-  setWorkspaceParts(library:BlockLibraryComponent, canvas: CanvasComponent, outputDisplay: OutputDisplayComponent) {
+  setWorkspaceParts(workspace: HTMLDivElement, library: BlockLibraryComponent, canvas: CanvasComponent, outputDisplay: OutputDisplayComponent) {
+    this.workspace = workspace;
     this.library = library;
     this.canvas = canvas;
     this.outputDisplay = outputDisplay;
@@ -44,6 +47,10 @@ export class BlockCollisionService{
     return x >= canvasRect.left && x <= canvasRect.right
           && y >= canvasRect.top && y <= canvasRect.bottom;
 
+  }
+
+  public isBlockOnWorkspace(block:BlockComponent): boolean{
+    return this.isBlockWithinComponent(block, this.workspace);
   }
 
   public isBlockOnCanvas(block:BlockComponent): boolean{

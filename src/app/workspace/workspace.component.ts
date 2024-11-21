@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ComponentRef, HostListener, Type, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentRef,
+  ElementRef,
+  HostListener,
+  Type,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { BlockComponent } from '../block/block.component';
 import {BlockCollisionService} from '../block-collision-service/block-collision-service.component';
 import {BasicFilteringComponent} from '../block/block-implementations/basic-filtering/basic-filtering.component';
@@ -44,13 +53,13 @@ export class WorkspaceComponent implements AfterViewInit{
   @ViewChild(CanvasComponent) canvas!: CanvasComponent;
   @ViewChild(OutputDisplayComponent) outputDisplay!: OutputDisplayComponent;
 
-  instanceToRef: Map<BlockComponent, ComponentRef<BlockComponent>> = new Map();
+  instanceToRef: Map<BlockComponent, ComponentRef<BlockComponent>> = new Map(); // should be gotten rid of
 
 
-  constructor(private blockService: BlockService, private blockCollisionService: BlockCollisionService) {}
+  constructor(private elementRef: ElementRef, private blockService: BlockService, private blockCollisionService: BlockCollisionService) {}
 
   ngAfterViewInit() {
-    this.blockCollisionService.setWorkspaceParts(this.library, this.canvas, this.outputDisplay);
+    this.blockCollisionService.setWorkspaceParts(this.elementRef.nativeElement, this.library, this.canvas, this.outputDisplay);
   }
 
   addBlock(childType: Type<BlockComponent>, x: number, y: number): void {

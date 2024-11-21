@@ -114,7 +114,7 @@ export abstract class BlockComponent {
   }
 
   private isBlockPositionIsValid():boolean{
-    return this.blockCollisionService.isBlockOnCanvas(this) &&
+    return (this.blockCollisionService.isBlockOnCanvas(this) && this.blockCollisionService.isBlockOnWorkspace(this)) &&
       !(this.blockCollisionService.isBlockOnLibrary(this) || this.blockCollisionService.isBlockOnOutput(this))
   }
 
