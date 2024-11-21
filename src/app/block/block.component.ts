@@ -14,7 +14,7 @@ import {BlockService} from '../block-service/block-service.component';
     FormsModule
   ],
 })
-export abstract class BlockComponent implements OnDestroy {
+export abstract class BlockComponent {
   protected isViewOnly: boolean = false;
 
   abstract color: string;
@@ -40,7 +40,8 @@ export abstract class BlockComponent implements OnDestroy {
     this.isViewOnly = true;
   }
 
-  ngOnDestroy() {
+  private destroy(){
+    this.nextBlock?.destroy();
     this.blockService.removeBlock(this);
   }
 
@@ -66,11 +67,6 @@ export abstract class BlockComponent implements OnDestroy {
   public relative_move(x: number, y: number) {
     this.x += x;
     this.y += y;
-  }
-
-  public move_this(x: number, y: number) {
-    this.x = x;
-    this.y = y;
   }
 
   isOverlapping(otherBlock: BlockComponent): boolean {
@@ -115,6 +111,11 @@ export abstract class BlockComponent implements OnDestroy {
       return closestBlock;
     }
     return null;
+  }
+
+  private isBlockPositionIsValid():boolean{
+    return this.blockCollisionService.isBlockOnCanvas(this) &&
+      !(this.blockCollisionService.isBlockOnLibrary(this) || this.blockCollisionService.isBlockOnOutput(this))
   }
 
   private connect(block: BlockComponent) {
@@ -177,11 +178,15 @@ export abstract class BlockComponent implements OnDestroy {
 
   onPressRelease() {
     if(this.isDragging && !this.isViewOnly){
-      if (this.blockCollisionService.isBlockOnCanvas(this)) {
+      if (this.isBlockPositionIsValid()) {
         let touching_block: BlockComponent | null = this.checkCollisions();
         if (touching_block) {
           this.insertUnderneath(touching_block);
         }
+      }
+      else{
+        // call destroy self if block is at invalid position
+        this.destroy();
       }
     }
     this.isDragging = false;

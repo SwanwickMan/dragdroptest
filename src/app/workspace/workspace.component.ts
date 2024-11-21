@@ -40,8 +40,9 @@ import {BlockService} from '../block-service/block-service.component';
 export class WorkspaceComponent implements AfterViewInit{
   @ViewChild('dynamicContainer', { read: ViewContainerRef, static: true })
   dynamicContainer!: ViewContainerRef;
-  @ViewChild(CanvasComponent)
-  canvas!: CanvasComponent;
+  @ViewChild(BlockLibraryComponent) library!: BlockLibraryComponent;
+  @ViewChild(CanvasComponent) canvas!: CanvasComponent;
+  @ViewChild(OutputDisplayComponent) outputDisplay!: OutputDisplayComponent;
 
   instanceToRef: Map<BlockComponent, ComponentRef<BlockComponent>> = new Map();
 
@@ -49,7 +50,7 @@ export class WorkspaceComponent implements AfterViewInit{
   constructor(private blockService: BlockService, private blockCollisionService: BlockCollisionService) {}
 
   ngAfterViewInit() {
-    this.blockCollisionService.setCanvas(this.canvas);
+    this.blockCollisionService.setWorkspaceParts(this.library, this.canvas, this.outputDisplay);
   }
 
   addBlock(childType: Type<BlockComponent>, x: number, y: number): void {
@@ -75,15 +76,6 @@ export class WorkspaceComponent implements AfterViewInit{
         return;
       }
 }
-  }
-
-  @HostListener('document:mouseup')
-  @HostListener('document:touchend')
-  removeBlocksOffCanvas(){
-    let removeList = this.blockCollisionService.allBlocksNotOnCanvas();
-    removeList.forEach(block => {
-      this.removeBlock(this.instanceToRef.get(block));
-    });
   }
 
   centerCanvas(){

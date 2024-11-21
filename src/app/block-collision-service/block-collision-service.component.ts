@@ -1,7 +1,9 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable, OnInit, ViewChild} from '@angular/core';
 import { BlockComponent } from '../block/block.component';
 import { CanvasComponent } from '../canvas/canvas.component';
 import {BlockService} from '../block-service/block-service.component';
+import {BlockLibraryComponent} from '../block-library/block-library.component';
+import {OutputDisplayComponent} from '../output-display/output-display.component';
 
 
 @Injectable({
@@ -9,7 +11,9 @@ import {BlockService} from '../block-service/block-service.component';
 })
 export class BlockCollisionService{
   private blocks: BlockComponent[] = [];
+  private library!: BlockLibraryComponent;
   private canvas!: CanvasComponent;
+  private outputDisplay!: OutputDisplayComponent;
 
   constructor(private blockService: BlockService) {
     this.blockService.blocks$.subscribe((instances) => {
@@ -17,8 +21,10 @@ export class BlockCollisionService{
     });
   }
 
-  setCanvas(canvas: CanvasComponent) {
+  setWorkspaceParts(library:BlockLibraryComponent, canvas: CanvasComponent, outputDisplay: OutputDisplayComponent) {
+    this.library = library;
     this.canvas = canvas;
+    this.outputDisplay = outputDisplay;
   }
 
   getCollisionsForBlock(block:BlockComponent): BlockComponent[]{
@@ -31,8 +37,7 @@ export class BlockCollisionService{
     );
   }
 
-  isBlockOnCanvas(block:BlockComponent){
-    const nativeCanvas  = this.canvas.getNativeCanvas()
+  private isBlockWithinComponent(block:BlockComponent, nativeCanvas: HTMLDivElement){
     const canvasRect = nativeCanvas.getBoundingClientRect();
     let { x, y } = block.getCenter();
 
@@ -41,8 +46,16 @@ export class BlockCollisionService{
 
   }
 
-  allBlocksNotOnCanvas(): BlockComponent[]{
-    return this.blocks.filter(block => !this.isBlockOnCanvas(block));
+  public isBlockOnCanvas(block:BlockComponent): boolean{
+    return this.isBlockWithinComponent(block, this.canvas.getNativeCanvas());
+  }
+
+  public isBlockOnLibrary(block:BlockComponent): boolean{
+    return this.isBlockWithinComponent(block, this.library.getNativeCanvas());
+  }
+
+  public isBlockOnOutput(block:BlockComponent): boolean{
+    return this.isBlockWithinComponent(block, this.outputDisplay.getNativeCanvas());
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-output-display',
@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './output-display.component.css'
 })
 export class OutputDisplayComponent {
+  @ViewChild('outputDisplayElement', { static: true }) canvasRef!: ElementRef<HTMLDivElement>;
 
+  public getNativeCanvas(): HTMLDivElement {
+    return this.canvasRef.nativeElement;
+  }
 }

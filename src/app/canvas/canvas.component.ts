@@ -108,7 +108,7 @@ export class CanvasComponent implements OnInit{
 
 
 
-  getNativeCanvas(): HTMLDivElement {
+  public getNativeCanvas(): HTMLDivElement {
     return this.canvasRef.nativeElement;
   }
 }

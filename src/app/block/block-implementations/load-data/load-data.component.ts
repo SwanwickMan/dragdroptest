@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import { BlockComponent } from '../../block.component';
 import {NgClass, NgStyle} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -14,7 +14,7 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './load-data.component.html',
   styleUrl: '../../block.component.css'
 })
-export class LoadData extends BlockComponent{
+export class LoadData extends BlockComponent implements OnDestroy{
   height: number = 75;
   width: number = 200;
   color: string = "yellow";
@@ -31,8 +31,7 @@ export class LoadData extends BlockComponent{
   }
 
   // When destroyed allow new instances to be created
-  override ngOnDestroy() {
+  ngOnDestroy() {
     LoadData.hasInstance = false;
-    super.ngOnDestroy();
   }
 }
