@@ -17,6 +17,7 @@
 
 #canvas-container {
   overflow: hidden; /* Hide the parts of the canvas that go beyond the container */
+  user-select: none;
 }
 
 #canvas-button-container {
@@ -35,5 +36,4 @@
   padding: 10px 20px;
   transition: background-color 0.3s, color 0.3s;
 }
-
 
