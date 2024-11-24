@@ -1,53 +1,81 @@
 .block-container {
-    border: 1px solid #333; /* Border to make it visible */
+    border: 2px solid #555; /* Slightly darker border for definition */
     margin: 10px; /* Space between blocks */
     cursor: pointer; /* Indicate that it's draggable */
-    transition: background-color 0.2s; /* Smooth color transition */
-    user-select: none;
+    transition: transform 0.01s ease, background-color 0.1s ease, box-shadow 0.1s ease;
+    user-select: none; /* Prevent text selection */
     flex-direction: column;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* important for weird reasons*/
     left: 0;
     top: 0;
-    z-index: 999; /* one less than divs*/
+    z-index: 999; /* One less than divs */
     position: absolute;
+    border-radius: 10px; /* Rounded edges */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.block-container:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .block-container:active {
+    transform: scale(0.97); /* Slight press effect */
     cursor: grabbing;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1); /* Lower shadow */
 }
 
-
-h1{
-  font-size: 20px;
-  text-align: center;
+h1 {
+    font-size: 16px;
+    text-align: center;
+    color: #000000;
+    margin: 5px 0; /* Reduce spacing */
+    font-family: 'Roboto', sans-serif;
 }
 
-p{
-  font-size: 10px;
-  margin: auto;
+p {
+    font-size: 12px; /* Smaller text size */
+    margin: auto;
+    color: #181818;
+    font-family: 'Roboto', sans-serif;
 }
 
-.box-drop-down{
-  width: 80%;
+.box-drop-down {
+    width: 80%;
 }
 
-#integration{
-  width: 90%;
+#integration {
+    width: 90%;
 }
 
 .no-interact {
-  pointer-events: none;  /* Disables mouse interactions like click, hover, etc. */
-  user-select: none;     /* Prevents text selection */
-  touch-action: none;    /* Disables touch interactions like scrolling and pinch-to-zoom */
-  cursor: not-allowed;   /* Optional: Change cursor to indicate non-interactivity */
+    pointer-events: none; /* Disables mouse interactions like click, hover, etc. */
+    user-select: none; /* Prevents text selection */
+    touch-action: none; /* Disables touch interactions like scrolling and pinch-to-zoom */
+    cursor: not-allowed; /* Optional: Change cursor to indicate non-interactivity */
 }
 
 .glow {
-  box-shadow: 0 0 10px 5px black;
-  transition: box-shadow 0.15s ease-in-out;
-  z-index: 1001; /* one more than divs */
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8);
+    transition: box-shadow 0.3s ease-in-out;
+    z-index: 1001; /* one more than divs */
+}
+
+.block-container::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: -1;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Subtle outer glow */
+}
+
+.block-container:hover::before {
+    background: rgba(255, 255, 255, 0.2); /* Brighter effect on hover */
 }
