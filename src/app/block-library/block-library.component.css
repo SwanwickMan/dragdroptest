@@ -1,8 +1,18 @@
-#block-library{
-  background-color: mediumaquamarine;
+#block-library {
+  background-color: rgb(255, 255, 255);
   position: relative;
   overflow: auto;
-  width: 100%;
   height: 100%;
   z-index: 1000;
+  resize: horizontal; /* Allow horizontal resizing */
+  width: 100%; /* Initial width */
+  min-width: 200px; /* Minimum width */
+  max-width: 120%; /* Maximum width */
+  border-right: 3px solid; /* Border for resizing area */
+  border-right-color: rgb(190, 190, 190);
+  cursor: ew-resize; /* Cursor for resizing */
+}
+
+#block-library:hover {
+  border-right-color: rgb(154, 154, 154); /* Highlight border on hover */
 }
