@@ -45,6 +45,22 @@ export abstract class BlockComponent {
     this.blockService.removeBlock(this);
   }
 
+  private toggleGlow(apply: boolean) {
+    const action = apply ? 'add' : 'remove';
+    
+    const toggleRecursive = (block: BlockComponent | null) => {
+      if (block) {
+        const element = document.querySelector(`[data-id='${block.constructor.name}']`);
+        if (element) {
+          element.classList[action]('glow');
+        }
+        toggleRecursive(block.nextBlock); // Recursively toggle for child blocks
+      }
+    };
+  
+    toggleRecursive(this); // starts with current block
+  }
+  
   public initialize(x: number, y: number, scrollX: number, scrollY: number) {
     this.isDragging = true;
     this.x = x + scrollX;
@@ -126,7 +142,7 @@ export abstract class BlockComponent {
   }
 
   public insertUnderneath(block: BlockComponent) {
-    let nextBlock= block.nextBlock;
+    const nextBlock= block.nextBlock;
 
     block.connect(this);
     if (nextBlock) {
@@ -161,11 +177,19 @@ export abstract class BlockComponent {
 
 
   // below all handles moving blocks with mouse and touchscreen needs overhaul
-  private onPressDown(x:number,y:number){
+  // private onPressDown(x:number,y:number){
+  //   if (!this.isViewOnly) {
+  //     this.isDragging = true;
+  //     this.startX = x - this.x;
+  //     this.startY = y - this.y;
+  //   }
+  // }
+  private onPressDown(x: number, y: number) {
     if (!this.isViewOnly) {
       this.isDragging = true;
       this.startX = x - this.x;
       this.startY = y - this.y;
+      this.toggleGlow(true); // Add the glow effect
     }
   }
 
@@ -190,6 +214,7 @@ export abstract class BlockComponent {
         this.destroy();
       }
     }
+    this.toggleGlow(false);
     this.isDragging = false;
   }
 
