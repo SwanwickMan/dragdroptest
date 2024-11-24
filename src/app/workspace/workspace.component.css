@@ -34,19 +34,32 @@
 }
 
 #canvas-button-container {
-  width: 60%;
-  position: absolute;
+  width: 100%;
+  position: relative;
+  display: flex;
   box-sizing: border-box; /* Position buttons absolutely inside the container */
-  padding: 10px 20px;
+  justify-content: center; /* Center align buttons */
+  gap: 15px; /* Add space between buttons */
+  padding: 15px; /* Space around the button container */
+  background-color: #f4f4f4; /* Subtle background for contrast */
+  border-radius: 8px; /* Rounded edges for the container */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
   z-index: 100000000000000; /* Ensure buttons appear on top of the content */
 }
 
 #canvas-button-container button {
-  position: relative;  /* Position buttons absolutely inside the container */
-  background-color: transparent;  /* Make the background transparent */
-  border: 2px dot-dot-dash black;  /* Optional: border for the buttons */
-  color: black;  /* Text color */
-  padding: 10px 20px;
-  transition: background-color 0.3s, color 0.3s;
+  background-color: #0095f1; /* Primary blue button color */
+  color: white; /* White text for contrast */
+  border: none; /* Remove default borders */
+  border-radius: 6px; /* Rounded corners for buttons */
+  padding: 12px 18px; /* Comfortable padding */
+  font-size: 16px; /* Larger, modern text size */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transitions */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+#canvas-button-container button:hover {
+  background-color: #0281cb; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
