@@ -24,7 +24,7 @@ export abstract class BlockComponent {
   protected x: number = 0; // Current X position
   protected y: number = 0; // Current Y position
 
-  public isDragging = false;
+  protected isDragging = false;
   private startX = 0;
   private startY = 0;
 
@@ -47,7 +47,7 @@ export abstract class BlockComponent {
 
   private toggleGlow(apply: boolean) {
     const action = apply ? 'add' : 'remove';
-    
+
     const toggleRecursive = (block: BlockComponent | null) => {
       if (block) {
         const element = document.querySelector(`[data-id='${block.constructor.name}']`);
@@ -57,10 +57,10 @@ export abstract class BlockComponent {
         toggleRecursive(block.nextBlock); // Recursively toggle for child blocks
       }
     };
-  
+
     toggleRecursive(this); // starts with current block
   }
-  
+
   public initialize(x: number, y: number, scrollX: number, scrollY: number) {
     this.isDragging = true;
     this.x = x + scrollX;
